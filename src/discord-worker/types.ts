@@ -1,3 +1,5 @@
+export type Snowflake = string;
+
 export enum ApplicationCommandOptionType {
   SUB_COMMAND = 1,
   SUB_COMMAND_GROUP = 2,
@@ -16,8 +18,15 @@ export type ApplicationCommandOptionChoice = {
   value: string | number;
 };
 
+export enum ApplicationCommandType {
+  CHAT_INPUT = 1,
+  USER = 2,
+  MESSAGE = 3,
+}
+
 export type ApplicationCommand = {
-  name: string;
+  name: Snowflake;
+  type?: ApplicationCommandType
   description: string;
   options?: ApplicationCommandOption[];
 };
@@ -78,19 +87,19 @@ export enum PermissionType {
   USE_EXTERNAL_STICKERS	= 1 << 37,	
 }
 
-export type Snowflake = string;
-
 export enum InteractionType {
   Ping = 1,
   ApplicationCommand = 2,
+  MessageComponent = 3
 }
 
 export type OptionType = any;
 
 export type ApplicationCommandInteractionData = {
-  id: Snowflake;
+  id: string;
   name: string;
   options?: ApplicationCommandInteractionDataOption[];
+  resolved?: any;
 };
 
 export type GuildMember = {
@@ -113,11 +122,11 @@ export type GuildMember = {
 };
 
 export type Interaction = {
-  id: Snowflake;
+  id: string;
   type: InteractionType;
   data?: ApplicationCommandInteractionData;
-  guild_id: Snowflake;
-  channel_id: Snowflake;
+  guild_id: string;
+  channel_id: string;
   member: GuildMember;
   token: string;
   version: number;
@@ -139,8 +148,8 @@ export enum AllowedMentionTypes {
 
 export type AllowedMentions = {
   parse?: AllowedMentionTypes[];
-  roles?: Snowflake[];
-  users?: Snowflake[];
+  roles?: string[];
+  users?: string[];
   replied_user?: boolean;
 };
 

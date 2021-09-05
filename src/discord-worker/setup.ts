@@ -1,11 +1,10 @@
+import { btoa } from '../utils/utils';
 import { ApplicationCommand, InteractionHandler } from "./types";
-
-declare const DISCORD_SITE: string;
 
 const getAuthorizationCode = async (headers: any) => {
   headers['Content-Type'] = 'application/x-www-form-urlencoded'
 
-  const request = new Request(`${DISCORD_SITE}/api/oauth2/token`, {
+  const request = new Request("https://discord.com/api/oauth2/token", {
     method: "POST",
     body: new URLSearchParams({
       grant_type: "client_credentials",
@@ -27,7 +26,7 @@ const getAuthorizationCode = async (headers: any) => {
 };
 
 const deleteExistingCommands = async (applicationId: string, bearer: any): Promise<void> => {
-  const url = `${DISCORD_SITE}/api/v8/applications/${applicationId}/commands`;
+  const url = `https://discord.com/api/v8/applications/${applicationId}/commands`;
 
   const request = new Request(url, {
     method: "GET",
@@ -43,7 +42,7 @@ const deleteExistingCommands = async (applicationId: string, bearer: any): Promi
         command: ApplicationCommand & { id: string; application_id: string }
       ) => {
         return fetch(
-          `${DISCORD_SITE}/api/v8/applications/${applicationId}/commands/${command.id}`,
+          `https://discord.com/api/v8/applications/${applicationId}/commands/${command.id}`,
           {
             method: "DELETE",
             headers: { Authorizaton: `Bearer ${bearer}`}
@@ -64,8 +63,12 @@ const createCommands = async (
   },
   bearer: any
 ): Promise<Response> => {
-  const url = `${DISCORD_SITE}/api/v8/applications/${applicationId}/guilds/868930309478027364/commands`
-  // const url = `${DISCORD_SITE}/api/v8/applications/${applicationId}/commands`;
+
+  /*
+  * To install guild commands (instantly), use the following URL:
+  *     https://discord.com/api/v8/applications/${applicationId}/guilds/${guild_id}/commands
+  */
+  const url = `https://discord.com/api/v8/applications/${applicationId}/commands`;
 
   const promises = commands.map(async ([command, handler]) => {
     const request = new Request(url, {
@@ -78,8 +81,6 @@ const createCommands = async (
 
     try {
       const response = await fetch(request);
-
-      console.log(response);
 
       if (!response.ok) throw error;
       return response;

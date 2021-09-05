@@ -21,6 +21,8 @@
   "devDependencies": {
     "@cloudflare/workers-types": "^2.2.2",
     "@types/jest": "^26.0.23",
+    "@types/lodash": "^4.14.172",
+    "@types/node": "^16.7.10",
     "@typescript-eslint/eslint-plugin": "^4.16.1",
     "@typescript-eslint/parser": "^4.16.1",
     "eslint": "^7.21.0",
@@ -35,9 +37,10 @@
     "webpack-cli": "^4.7.0"
   },
   "dependencies": {
-    "@types/node": "^16.7.10",
+    "array-shuffle": "^3.0.0",
     "buffer": "^6.0.3",
     "itty-router": "^2.4.2",
+    "lodash": "^4.17.21",
     "tweetnacl": "^1.0.3"
   }
 }

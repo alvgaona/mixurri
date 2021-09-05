@@ -1,8 +1,9 @@
 import { Router } from 'itty-router';
-import { ApplicationCommand, InteractionHandler } from './types';
-import { authorize } from './authorize';
 import { setup } from './setup';
+import { authorize } from './authorize';
 import { interaction } from './interaction';
+import { Permissions } from './permissions';
+import { ApplicationCommand, InteractionHandler } from './types';
 
 const router = Router();
 
@@ -10,12 +11,12 @@ export type Application = {
   applicationId: string;
   applicationSecret: string;
   publicKey: string;
-  commands: [ApplicationCommand, InteractionHandler][]
+  commands: [ApplicationCommand, InteractionHandler][];
+  permissions: Permissions;
 }
 
-
 export const createApplicationCommandHandler = (application: Application) => {
-  router.get("/", authorize(application.applicationId));
+  router.get("/", authorize(application.applicationId, application.permissions));
   router.post("/interaction", interaction({ publicKey: application.publicKey, commands: application.commands }));
   router.get("/setup", setup({ applicationId: application.applicationId, applicationSecret: application.applicationSecret, commands: application.commands }));
   return (request: Request) => router.handle(request);

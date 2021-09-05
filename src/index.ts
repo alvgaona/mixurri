@@ -1,5 +1,10 @@
-import { createApplicationCommandHandler } from './handler';
-import { helloCommand, helloHandler } from './hello';
+import { listHandler, listCommand } from './cmd/list';
+import { createApplicationCommandHandler } from './discord-worker/handler';
+import { shuffleHandler, shuffleCommand } from './cmd/shuffle';
+import { registerHandler, registerCommand } from './cmd/register';
+import { deregisterHandler, deregisterCommand } from './cmd/deregister';
+import { Permissions } from './discord-worker/permissions';
+import { PermissionType } from './discord-worker/types';
 
 declare const CLIENT_ID: string;
 declare const CLIENT_SECRET: string;
@@ -9,7 +14,25 @@ const applicationCommandHandler = createApplicationCommandHandler({
   applicationId: CLIENT_ID,
   applicationSecret: CLIENT_SECRET,
   publicKey: PUBLIC_KEY,
-  commands: [[helloCommand, helloHandler]],
+  commands: [
+    [registerCommand, registerHandler],
+    [deregisterCommand, deregisterHandler],
+    [listCommand, listHandler],
+    [shuffleCommand, shuffleHandler],
+  ],
+  permissions: new Permissions(
+    [
+      PermissionType.ADD_REACTIONS,
+      PermissionType.ATTACH_FILES,
+      PermissionType.EMBED_LINKS,
+      PermissionType.SEND_MESSAGES,
+      PermissionType.USE_PUBLIC_THREADS,
+      PermissionType.SEND_TTS_MESSAGES,
+      PermissionType.MENTION_EVERYONE,
+      PermissionType.USE_EXTERNAL_EMOJIS,
+      PermissionType.USE_EXTERNAL_STICKERS,
+    ]
+  )
 });
 
 addEventListener('fetch', (event) => {
