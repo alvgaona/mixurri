@@ -1,0 +1,14 @@
+name = "mixurri"
+type = "javascript"
+account_id = "590d5e6a4382a813b506fa45ca1609e0"
+workers_dev = true
+
+kv_namespaces = [
+  { binding = "MIXURRI", id = "52513a5cfaec427abe3dbf9d434961ab", preview_id = "6887f8g9h90j" }
+]
+
+[build]
+command = "npm install && npm run build"
+
+[build.upload]
+format = "service-worker"
