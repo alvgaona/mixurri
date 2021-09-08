@@ -5,6 +5,7 @@ import { registerHandler, registerCommand } from './cmd/register';
 import { deregisterHandler, deregisterCommand } from './cmd/deregister';
 import { Permissions } from './discord-worker/permissions';
 import { PermissionType } from './discord-worker/types';
+import { resetCommand, resetHandler } from './cmd/reset';
 
 declare const CLIENT_ID: string;
 declare const CLIENT_SECRET: string;
@@ -19,6 +20,7 @@ const applicationCommandHandler = createApplicationCommandHandler({
     [deregisterCommand, deregisterHandler],
     [listCommand, listHandler],
     [shuffleCommand, shuffleHandler],
+    [resetCommand, resetHandler],
   ],
   permissions: new Permissions(
     [
