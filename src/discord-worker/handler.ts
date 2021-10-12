@@ -11,6 +11,7 @@ export type Application = {
   applicationId: string;
   applicationSecret: string;
   publicKey: string;
+  guildId?: string;
   commands: [ApplicationCommand, InteractionHandler][];
   permissions: Permissions;
 }
@@ -18,6 +19,11 @@ export type Application = {
 export const createApplicationCommandHandler = (application: Application) => {
   router.get("/", authorize(application.applicationId, application.permissions));
   router.post("/interaction", interaction({ publicKey: application.publicKey, commands: application.commands }));
-  router.get("/setup", setup({ applicationId: application.applicationId, applicationSecret: application.applicationSecret, commands: application.commands }));
+  router.get("/setup", setup(
+    {
+      applicationId: application.applicationId,
+      applicationSecret: application.applicationSecret,
+      guildId: application.guildId,
+      commands: application.commands }));
   return (request: Request) => router.handle(request);
 };

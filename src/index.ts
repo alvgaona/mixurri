@@ -11,6 +11,12 @@ declare const CLIENT_ID: string;
 declare const CLIENT_SECRET: string;
 declare const PUBLIC_KEY: string;
 
+/*
+* To install guild commands (instantly), Discord should use the following URL:
+*     https://discord.com/api/v8/applications/${applicationId}/guilds/${guild_id}/commands
+*
+* Therefore, you should pass a guildId in the Application.
+*/
 const applicationCommandHandler = createApplicationCommandHandler({
   applicationId: CLIENT_ID,
   applicationSecret: CLIENT_SECRET,

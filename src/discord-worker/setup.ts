@@ -25,8 +25,19 @@ const getAuthorizationCode = async (headers: any) => {
   }
 };
 
-const deleteExistingCommands = async (applicationId: string, bearer: any): Promise<void> => {
-  const url = `https://discord.com/api/v8/applications/${applicationId}/commands`;
+
+const resolveCommandsEndpoint = (applicationId: string, guildId?: string): string => {
+  const url = `https://discord.com/api/v8/applications/${applicationId}`;
+
+  if (guildId) {
+    return `${url}/guilds/${guildId}/commands`
+  }
+
+  return `${url}/commands`;
+}
+
+const deleteExistingCommands = async (applicationId: string, bearer: any, guildId?: string): Promise<void> => {
+  const url = resolveCommandsEndpoint(applicationId, guildId);
 
   const request = new Request(url, {
     method: "GET",
@@ -42,7 +53,7 @@ const deleteExistingCommands = async (applicationId: string, bearer: any): Promi
         command: ApplicationCommand & { id: string; application_id: string }
       ) => {
         return fetch(
-          `https://discord.com/api/v8/applications/${applicationId}/commands/${command.id}`,
+          `${url}/${command.id}`,
           {
             method: "DELETE",
             headers: { Authorizaton: `Bearer ${bearer}`}
@@ -56,19 +67,17 @@ const deleteExistingCommands = async (applicationId: string, bearer: any): Promi
 const createCommands = async (
   {
     applicationId,
+    guildId,
     commands,
   }: {
     applicationId: string;
+    guildId?: string;
     commands: [ApplicationCommand, InteractionHandler][];
   },
   bearer: any
 ): Promise<Response> => {
 
-  /*
-  * To install guild commands (instantly), use the following URL:
-  *     https://discord.com/api/v8/applications/${applicationId}/guilds/${guild_id}/commands
-  */
-  const url = `https://discord.com/api/v8/applications/${applicationId}/commands`;
+  const url = resolveCommandsEndpoint(applicationId, guildId);
 
   const promises = commands.map(async ([command, handler]) => {
     const request = new Request(url, {
@@ -97,10 +106,12 @@ const createCommands = async (
 export const setup = ({
   applicationId,
   applicationSecret,
+  guildId,
   commands,
 }: {
   applicationId: string;
   applicationSecret: string;
+  guildId?: string;
   commands: [ApplicationCommand, InteractionHandler][];
 }) => {
 
@@ -115,7 +126,7 @@ export const setup = ({
       const bearer = await getAuthorizationCode(headers);
 
       await deleteExistingCommands(applicationId, bearer);
-      return await createCommands({ applicationId, commands }, bearer);
+      return await createCommands({ applicationId, guildId, commands }, bearer);
     } catch {
       return new Response(
         JSON.stringify({error: "Failed to authenticate with Discord. Are the Application ID and secret set correctly?"}),
