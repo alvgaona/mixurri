@@ -1,6 +1,6 @@
 type = "javascript"
-account_id = ""                                               # Enter Cloudflare account ID
-zone_id = ""                                                  # Enter Cloudflare zone ID
+account_id = ""
+zone_id = ""
 
 [build]
 command = "npm install && npm run build"
@@ -9,14 +9,14 @@ command = "npm install && npm run build"
 format = "service-worker"
 
 [env.dev]
-name = ""                                                     # Enter the dev worker's name
+name = "dev-mixurri"
 workers_dev = true
 
-kv_namespaces = [{ binding = "", id = "", preview_id = "" }]  # Enter the Worker KV store for dev
+kv_namespaces = [{ binding = "", id = "", preview_id = "" }]
 
 [env.prod]
-name = ""                                                     # Enter the prod worker's name
+name = "mixurri"
 workers_dev = false
-route = ""                                                    # Enter your production route
+route = ""
 
-kv_namespaces = [{ binding = "", id = "", preview_id = "" }]  # Enter the Worker KV store for prod
+kv_namespaces = [{ binding = "", id = "", preview_id = "" }]
