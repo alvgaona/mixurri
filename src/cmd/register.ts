@@ -1,7 +1,6 @@
 import { User } from '../storage/types';
 import { formatUserId } from '../utils/utils';
-import { ApplicationCommand, InteractionHandler, Interaction, InteractionResponse, InteractionResponseType, ApplicationCommandOptionType } from '../discord-worker/types'
-
+import { ApplicationCommand, InteractionHandler, Interaction, InteractionResponse, InteractionResponseType, ApplicationCommandOptionType } from 'cloudflare-discord-bot';
 declare const MIXURRI: any;
 
 export const registerCommand: ApplicationCommand = {

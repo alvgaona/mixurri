@@ -7,7 +7,7 @@ import {
   Interaction,
   InteractionResponse,
   InteractionResponseType
-} from '../discord-worker/types'
+} from 'cloudflare-discord-bot'
 
 declare const MIXURRI: any;
 
