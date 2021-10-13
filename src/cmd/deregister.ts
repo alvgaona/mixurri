@@ -7,8 +7,8 @@ import {
   Interaction,
   InteractionResponse,
   InteractionResponseType,
-  ApplicationCommandOptionType
-} from '../discord-worker/types'
+  ApplicationCommandOptionType 
+} from 'cloudflare-discord-bot';
 
 declare const MIXURRI: any;
 

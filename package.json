@@ -39,6 +39,7 @@
   "dependencies": {
     "array-shuffle": "^3.0.0",
     "buffer": "^6.0.3",
+    "cloudflare-discord-bot": "0.0.1",
     "itty-router": "^2.4.2",
     "lodash": "^4.17.21",
     "tweetnacl": "^1.0.3"

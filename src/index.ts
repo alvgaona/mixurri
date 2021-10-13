@@ -1,10 +1,10 @@
 import { listHandler, listCommand } from './cmd/list';
-import { createApplicationCommandHandler } from './discord-worker/handler';
+import { createApplicationCommandHandler } from 'cloudflare-discord-bot';
 import { shuffleHandler, shuffleCommand } from './cmd/shuffle';
 import { registerHandler, registerCommand } from './cmd/register';
 import { deregisterHandler, deregisterCommand } from './cmd/deregister';
-import { Permissions } from './discord-worker/permissions';
-import { PermissionType } from './discord-worker/types';
+import { Permissions } from 'cloudflare-discord-bot';
+import { PermissionType } from 'cloudflare-discord-bot';
 import { resetCommand, resetHandler } from './cmd/reset';
 
 declare const CLIENT_ID: string;

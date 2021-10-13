@@ -3,9 +3,8 @@ import {
     InteractionHandler,
     Interaction,
     InteractionResponse,
-    InteractionResponseType,
-    ApplicationCommandOptionType 
-} from '../discord-worker/types'
+    InteractionResponseType, 
+} from 'cloudflare-discord-bot'
 
 declare const MIXURRI: any;
 
